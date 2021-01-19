@@ -1,9 +1,10 @@
 project "ImGui"
 	kind "StaticLib"
 	language "C"
+    staticruntime "On"
 
-	targetdir ("bin" .. outputdir .. "%{prj.name}")
-	objdir ("bin-int" .. outputdir .. "%{prj.name}")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
@@ -22,9 +23,12 @@ project "ImGui"
 
 	filter "system:windows"
 		systemversion "latest"
-        cppdialect "C++17"
-		staticruntime "On"
 
+        
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
 
-	filter { "system:windows", "configurations:Release" }
-		buildoptions "/MT"
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
